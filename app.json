@@ -5,7 +5,8 @@
     "version": "1.0.0",
 
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/favicon.png",
+       "bundler": "metro"
     },
 
     "experiments": {
@@ -15,12 +16,12 @@
     "plugins": [],
 
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./app/assets/images/icon.png",
 
     "userInterfaceStyle": "light",
 
     "splash": {
-      "image": "./assets/splash.png",
+      "image": ".app/assets/images/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
