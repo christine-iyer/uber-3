@@ -1,22 +1,32 @@
-import { Text, View } from 'react-native';
+import { useFonts } from 'expo-font';
+import * as SplashScreen from 'expo-splash-screen';
+import { useEffect } from 'react';
+import { View, ActivityIndicator } from 'react-native';
 
-import { EditScreenInfo } from './EditScreenInfo';
+export default function Layout({ children }: { children: React.ReactNode }) {
+  const [fontsLoaded] = useFonts({
+    'PlusJakartaSans-Regular': require('../../assets/fonts/PlusJakartaSans-Regular.ttf'),
+    'PlusJakartaSans-Bold': require('../../assets/fonts/PlusJakartaSans-Bold.ttf'),
+    'PlusJakartaSans-Light': require('../../assets/fonts/PlusJakartaSans-Light.ttf'),
+  });
 
-type ScreenContentProps = {
-  title: string;
-  path: string;
-  children?: React.ReactNode;
-};
+  useEffect(() => {
+    async function prepare() {
+      await SplashScreen.preventAutoHideAsync();
+      if (fontsLoaded) {
+        await SplashScreen.hideAsync();
+      }
+    }
+    prepare();
+  }, [fontsLoaded]);
 
-export const ScreenContent = ({ title, path, children }: ScreenContentProps) => {
-  return (
-    <View className="flex-1 items-center justify-center bg-red-500">
-      <Text className="text-lg font-bold text-yellow-500">Hey Jayadeva</Text>
-      <Text className="text-lg font-bold text-blue-500">Hari Gita Govinda</Text>
-      <Text className="text-lg font-bold text-yellow-500">Ravana Veda</Text>
+  if (!fontsLoaded) {
+    return (
+      <View className="flex-1 items-center justify-center">
+        <ActivityIndicator size="large" />
+      </View>
+    );
+  }
 
-      <EditScreenInfo path={path} />
-      {children}
-    </View>
-  );
-};
+  return <View className="flex-1">{children}</View>;
+}

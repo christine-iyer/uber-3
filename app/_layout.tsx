@@ -1,37 +1,32 @@
 import { useFonts } from 'expo-font';
-import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
-import 'react-native-reanimated';
+import { View, ActivityIndicator } from 'react-native';
 
-SplashScreen.preventAutoHideAsync();
-
-export default function RootLayout() {
-  const [loaded] = useFonts({
-    'Jakarta-Bold': require('../assets/fonts/PlusJakartaSans-Bold.ttf'),
-    'Jakarta-ExtraBold': require('../assets/fonts/PlusJakartaSans-ExtraBold.ttf'),
-    'Jakarta-ExtraLight': require('../assets/fonts/PlusJakartaSans-ExtraLight.ttf'),
-    'Jakarta-Light': require('../assets/fonts/PlusJakartaSans-Light.ttf'),
-    'Jakarta-Medium': require('../assets/fonts/PlusJakartaSans-Medium.ttf'),
-    Jakarta: require('../assets/fonts/PlusJakartaSans-Regular.ttf'),
-    'Jakarta-SemiBold': require('../assets/fonts/PlusJakartaSans-SemiBold.ttf'),
+export default function Layout({ children }: { children: React.ReactNode }) {
+  const [fontsLoaded] = useFonts({
+    'PlusJakartaSans-Regular': require('../assets/fonts/PlusJakartaSans-Regular.ttf'),
+    'PlusJakartaSans-Bold': require('../assets/fonts/PlusJakartaSans-Bold.ttf'),
+    'PlusJakartaSans-Light': require('../assets/fonts/PlusJakartaSans-Light.ttf'),
   });
 
   useEffect(() => {
-    if (loaded) {
-      SplashScreen.hideAsync();
+    async function prepare() {
+      await SplashScreen.preventAutoHideAsync();
+      if (fontsLoaded) {
+        await SplashScreen.hideAsync();
+      }
     }
-  }, [loaded]);
+    prepare();
+  }, [fontsLoaded]);
 
-  if (!loaded) {
-    return null;
+  if (!fontsLoaded) {
+    return (
+      <View className="flex-1 items-center justify-center">
+        <ActivityIndicator size="large" />
+      </View>
+    );
   }
 
-  return (
-    <>
-      <Stack>
-        <Stack.Screen name="index" options={{ headerShown: false }} />
-      </Stack>
-    </>
-  );
+  return <View className="flex-1">{children}</View>;
 }

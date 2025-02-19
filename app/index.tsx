@@ -1,13 +1,14 @@
-import { ScreenContent } from 'app/components/ScreenContent';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
-import { View, Text } from 'react-native';
+import { Text } from 'react-native';
+
+import { ScreenContent } from './components/ScreenContent';
 
 export default function Home() {
   const [fontsLoaded] = useFonts({
-    'PlusJakartaSans-Bold': require('../assets/fonts/PlusJakartaSans-Bold.ttf'),
+    'PlusJakartaSans-Regular': require('../assets/fonts/PlusJakartaSans-Regular.ttf'),
   });
 
   useEffect(() => {
@@ -32,6 +33,7 @@ export default function Home() {
   }
   return (
     <>
+      <Text>Hi</Text>
       <ScreenContent title="Home" path="App.tsx" />
       <StatusBar style="auto" />
     </>
