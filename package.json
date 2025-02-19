@@ -12,6 +12,9 @@
   },
   "dependencies": {
     "expo": "^52.0.35",
+    "expo-font": "^13.0.3",
+    "expo-router": "^4.0.17",
+    "expo-splash-screen": "~0.29.22",
     "expo-status-bar": "~2.0.1",
     "nativewind": "latest",
     "react": "18.3.1",
