@@ -22,11 +22,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
   if (!fontsLoaded) {
     return (
-      <View className="flex-1 items-center justify-center">
+      <View>
         <ActivityIndicator size="large" />
       </View>
     );
   }
 
-  return <View className="flex-1">{children}</View>;
+  return <View>{children}</View>;
 }
