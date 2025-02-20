@@ -2,6 +2,8 @@
   "expo": {
     "name": "uber-3",
     "slug": "uber-3",
+    "scheme": "uberclone",
+    "newArchEnabled": true,
     "version": "1.0.0",
 
     "web": {
