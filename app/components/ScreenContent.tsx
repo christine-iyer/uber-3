@@ -5,9 +5,9 @@ import { View, ActivityIndicator } from 'react-native';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const [fontsLoaded] = useFonts({
-    'PlusJakartaSans-Regular': require('../../assets/fonts/PlusJakartaSans-Regular.ttf'),
-    'PlusJakartaSans-Bold': require('../../assets/fonts/PlusJakartaSans-Bold.ttf'),
-    'PlusJakartaSans-Light': require('../../assets/fonts/PlusJakartaSans-Light.ttf'),
+    'PlusJakartaSans-Regular': require('./../../assets/fonts/PlusJakartaSans-Regular.ttf'),
+    'PlusJakartaSans-Bold': require('./../../assets/fonts/PlusJakartaSans-Bold.ttf'),
+    'PlusJakartaSans-Light': require('./../../assets/fonts/PlusJakartaSans-Light.ttf'),
   });
 
   useEffect(() => {
