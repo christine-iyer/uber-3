@@ -10,7 +10,7 @@ export default function Home() {
     const timeout = setTimeout(() => {
       setReady(true);
       router.replace('/(auth)/welcome'); // Redirect after delay
-    }, 100); // Small delay ensures layout is mounted
+    }, 2500); // Increased delay to match splash screen
 
     return () => clearTimeout(timeout);
   }, []);
@@ -26,5 +26,5 @@ export default function Home() {
     );
   }
 
-  return null; // Nothing is displayed since it redirects
+  return null;
 }

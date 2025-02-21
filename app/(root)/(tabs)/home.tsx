@@ -7,7 +7,6 @@ export default function HomeScreen() {
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
       <Text>🏚️</Text>
       <Button title="➡ to Chat" onPress={() => router.push('/(root)/(tabs)/chat')} />
-      <Button title="🔙 Home" onPress={() => router.back()} />
     </View>
   );
 }

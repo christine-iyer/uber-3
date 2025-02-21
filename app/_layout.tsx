@@ -1,12 +1,11 @@
 import { useFonts } from 'expo-font';
-import { Stack, Slot } from 'expo-router';
+import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
-import { StatusBar } from 'expo-status-bar';
-import { useEffect, useCallback } from 'react';
+import { useEffect, useCallback, useState } from 'react';
 import { View, ActivityIndicator } from 'react-native';
 import 'react-native-reanimated';
 
-// Prevent splash screen from hiding early
+// Prevent splash screen from hiding too early
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
@@ -21,13 +20,21 @@ export default function RootLayout() {
     'PlusJakartaSans-ExtraBoldItalic': require('../assets/fonts/PlusJakartaSans-ExtraBoldItalic.ttf'),
   });
 
-  const onLayoutRootView = useCallback(async () => {
-    if (fontsLoaded) {
-      await SplashScreen.hideAsync();
-    }
+  const [isReady, setIsReady] = useState(false);
+
+  useEffect(() => {
+    const prepareApp = async () => {
+      if (fontsLoaded) {
+        await new Promise((resolve) => setTimeout(resolve, 2000)); // Ensure splash is visible for at least 2 sec
+        setIsReady(true);
+        await SplashScreen.hideAsync();
+      }
+    };
+
+    prepareApp();
   }, [fontsLoaded]);
 
-  if (!fontsLoaded) {
+  if (!isReady) {
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         <ActivityIndicator size="large" color="#0000ff" />
@@ -35,10 +42,5 @@ export default function RootLayout() {
     );
   }
 
-  return (
-    <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
-      <Stack />
-      <Slot />
-    </View>
-  );
+  return <Stack screenOptions={{ headerShown: false }} />;
 }
