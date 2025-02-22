@@ -1,14 +1,42 @@
+import { ClerkProvider, ClerkLoaded } from '@clerk/clerk-expo';
 import { useFonts } from 'expo-font';
-import { Stack } from 'expo-router';
+import { Slot } from 'expo-router';
+import * as SecureStore from 'expo-secure-store';
 import * as SplashScreen from 'expo-splash-screen';
-import { useEffect, useCallback, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { View, ActivityIndicator } from 'react-native';
+
+import { tokenCache } from '@/cache';
 import 'react-native-reanimated';
 
 // Prevent splash screen from hiding too early
 SplashScreen.preventAutoHideAsync();
 
+// Retrieve Clerk Publishable Key
+const publishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY;
+
+if (!publishableKey) {
+  throw new Error(
+    'Missing Publishable Key. Please set EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY in your .env'
+  );
+}
+
+// SecureStore token caching for Clerk authentication
+const tokenCacheConfig = {
+  async getToken(key) {
+    return SecureStore.getItemAsync(key);
+  },
+  async saveToken(key, value) {
+    return SecureStore.setItemAsync(key, value);
+  },
+  async removeToken(key) {
+    return SecureStore.deleteItemAsync(key);
+  },
+};
+
 export default function RootLayout() {
+  const [isReady, setIsReady] = useState(false);
+
   const [fontsLoaded] = useFonts({
     'Jakarta-Bold': require('../assets/fonts/PlusJakartaSans-Bold.ttf'),
     'Jakarta-ExtraBold': require('../assets/fonts/PlusJakartaSans-ExtraBold.ttf'),
@@ -20,15 +48,13 @@ export default function RootLayout() {
     'PlusJakartaSans-ExtraBoldItalic': require('../assets/fonts/PlusJakartaSans-ExtraBoldItalic.ttf'),
   });
 
-  const [isReady, setIsReady] = useState(false);
-
   useEffect(() => {
     const prepareApp = async () => {
-      if (fontsLoaded) {
-        await new Promise((resolve) => setTimeout(resolve, 2000)); // Ensure splash is visible for at least 2 sec
-        setIsReady(true);
-        await SplashScreen.hideAsync();
-      }
+      if (!fontsLoaded) return;
+
+      await new Promise((resolve) => setTimeout(resolve, 2000)); // Ensures splash screen remains visible for 2 sec
+      await SplashScreen.hideAsync();
+      setIsReady(true);
     };
 
     prepareApp();
@@ -42,5 +68,11 @@ export default function RootLayout() {
     );
   }
 
-  return <Stack screenOptions={{ headerShown: false }} />;
+  return (
+    <ClerkProvider tokenCache={tokenCacheConfig} publishableKey={publishableKey}>
+      <ClerkLoaded>
+        <Slot />
+      </ClerkLoaded>
+    </ClerkProvider>
+  );
 }
