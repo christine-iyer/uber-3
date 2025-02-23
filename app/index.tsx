@@ -1,30 +1,25 @@
-import { useRouter } from 'expo-router';
-import { useEffect, useState } from 'react';
-import { SafeAreaView, View, ActivityIndicator, Text } from 'react-native';
+\import { useUser } from '@clerk/clerk-expo';
+import { SafeAreaView, Text, ActivityIndicator } from 'react-native';
 
 export default function Home() {
-  const router = useRouter();
-  const [ready, setReady] = useState(false);
+  const { isSignedIn, isLoaded, user } = useUser();
 
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      setReady(true);
-      router.replace('/(auth)/welcome'); // Redirect after delay
-    }, 2500); // Increased delay to match splash screen
-
-    return () => clearTimeout(timeout);
-  }, []);
-
-  if (!ready) {
+  if (!isLoaded) {
     return (
-      <SafeAreaView style={{ flex: 1 }}>
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-          <Text style={{ fontFamily: 'PlusJakartaSans-ExtraBoldItalic' }}>You're home!</Text>
-          <ActivityIndicator size="large" />
-        </View>
+      <SafeAreaView style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <ActivityIndicator size="large" />
+        <Text>Checking sign-in status...</Text>
       </SafeAreaView>
     );
   }
 
-  return null;
+  return (
+    <SafeAreaView style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      {isSignedIn ? (
+        <Text>Welcome, {user?.fullName}!</Text>
+      ) : (
+        <Text>Please Sign In</Text>
+      )}
+    </SafeAreaView>
+  );
 }

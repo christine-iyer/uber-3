@@ -69,12 +69,12 @@ export default function RootLayout() {
   }
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <ClerkProvider tokenCache={tokenCacheConfig} publishableKey={publishableKey}>
-        <ClerkLoaded>
+    <ClerkProvider tokenCache={tokenCacheConfig} publishableKey={publishableKey}>
+      <ClerkLoaded>
+        <SafeAreaView style={{ flex: 1 }}>
           <Slot />
-        </ClerkLoaded>
-      </ClerkProvider>
-    </SafeAreaView>
+        </SafeAreaView>
+      </ClerkLoaded>
+    </ClerkProvider>
   );
 }
