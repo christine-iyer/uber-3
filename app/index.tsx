@@ -5,7 +5,7 @@ import { SafeAreaView, Text, ActivityIndicator, Button } from 'react-native';
 export default function Home() {
   const router = useRouter();
   const { isSignedIn, isLoaded, user } = useUser();
-  const { signOut } = useAuth(); // Import signOut function
+  const { signOut } = useAuth();
 
   if (!isLoaded) {
     return (
@@ -23,17 +23,19 @@ export default function Home() {
           <Text>Welcome, {user?.fullName || 'No Name Found'}!</Text>
           <Text>Email: {user?.primaryEmailAddress?.emailAddress || 'No Email'}</Text>
 
-          {/* Logout Button */}
           <Button
             title="Logout"
             onPress={() => {
               signOut();
-              router.replace('/login'); // Replace with your login screen route
+              router.replace('/login'); // Redirect to login screen
             }}
           />
         </>
       ) : (
-        <Text>Please Sign In</Text>
+        <>
+          <Text>Please Sign In</Text>
+          <Button title="Go to Sign In" onPress={() => router.replace('/(auth)/welcome')} />
+        </>
       )}
     </SafeAreaView>
   );
