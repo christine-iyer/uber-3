@@ -4,7 +4,7 @@ import { Slot } from 'expo-router';
 import * as SecureStore from 'expo-secure-store';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect, useState } from 'react';
-import { View, ActivityIndicator } from 'react-native';
+import { View, ActivityIndicator, SafeAreaView } from 'react-native';
 
 import { tokenCache } from '@/cache';
 import 'react-native-reanimated';
@@ -69,10 +69,12 @@ export default function RootLayout() {
   }
 
   return (
-    <ClerkProvider tokenCache={tokenCacheConfig} publishableKey={publishableKey}>
-      <ClerkLoaded>
-        <Slot />
-      </ClerkLoaded>
-    </ClerkProvider>
+    <SafeAreaView style={{ flex: 1 }}>
+      <ClerkProvider tokenCache={tokenCacheConfig} publishableKey={publishableKey}>
+        <ClerkLoaded>
+          <Slot />
+        </ClerkLoaded>
+      </ClerkProvider>
+    </SafeAreaView>
   );
 }
