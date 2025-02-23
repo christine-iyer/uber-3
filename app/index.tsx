@@ -1,6 +1,5 @@
 import { useUser, useAuth } from '@clerk/clerk-expo';
 import { useRouter } from 'expo-router';
-import { useEffect, useState } from 'react';
 import { SafeAreaView, Text, ActivityIndicator, Button } from 'react-native';
 
 export default function Home() {
