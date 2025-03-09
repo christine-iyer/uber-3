@@ -13,7 +13,7 @@ export default function SignInScreen() {
 
       {/* 🔙 Back Button */}
       <CustomButton
-        title="🔙 Back"
+        title="Back"
         bgVariant="secondary"
         textVariant="secondary"
         onPress={() => router.back()}

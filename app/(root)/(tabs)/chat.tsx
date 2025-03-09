@@ -3,7 +3,7 @@ import { typography } from 'styles/typography';
 export default function ChatScreen() {
   return (
     <View style={styles.chat}>
-      <Text style={styles.text}>Can yoiu talk?</Text>
+      <Text style={styles.text}>Can you talk?</Text>
     </View>
   );
 }
