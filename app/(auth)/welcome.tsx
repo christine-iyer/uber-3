@@ -67,6 +67,6 @@ const styles = StyleSheet.create({
   viewone: {}, //"mt-10 flex w-full flex-row items-center justify-center"
   title: {}, //"mx-10 text-center text-3xl font-bold text-black"
   description: {}, //"text-md font-JakartaSemiBold mx-10 mt-3 text-center text-[#858585]"
-  image: {}, //"h-[300px] w-full"
+  image: { height: 300 }, //"h-[300px] w-full"
   button: {}, //"mb-5 mt-10 w-11/12"
 });
