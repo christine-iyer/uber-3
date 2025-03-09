@@ -1,5 +1,6 @@
 import { useRouter } from 'expo-router';
 import { View, Text, StyleSheet } from 'react-native';
+import { typography } from 'styles/typography';
 
 import CustomButton from '../components/CustomButton'; // ✅ Import CustomButton
 
@@ -38,8 +39,8 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   heading: {
-    fontSize: 24,
-    fontWeight: 'bold',
     marginBottom: 20,
+    fontSize: 24,
+    fontFamily: typography.JakartaExtraBold,
   },
 });

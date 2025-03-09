@@ -3,6 +3,7 @@ import { useRouter } from 'expo-router';
 import { SafeAreaView, Text, ActivityIndicator, Button, StyleSheet } from 'react-native';
 
 import { typography } from '../styles/typography.js';
+
 export default function Home() {
   const router = useRouter();
   const { isSignedIn, isLoaded, user } = useUser();
