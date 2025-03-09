@@ -1,7 +1,8 @@
 import { useUser, useAuth } from '@clerk/clerk-expo';
 import { useRouter } from 'expo-router';
-import { SafeAreaView, Text, ActivityIndicator, Button } from 'react-native';
+import { SafeAreaView, Text, ActivityIndicator, Button, StyleSheet } from 'react-native';
 
+import { typography } from '../styles/typography.js';
 export default function Home() {
   const router = useRouter();
   const { isSignedIn, isLoaded, user } = useUser();
@@ -33,10 +34,16 @@ export default function Home() {
         </>
       ) : (
         <>
-          <Text>Please Sign In</Text>
+          <Text style={styles.text}>Please Sign In</Text>
           <Button title="Go to Sign In" onPress={() => router.replace('/(auth)/welcome')} />
         </>
       )}
     </SafeAreaView>
   );
 }
+const styles = StyleSheet.create({
+  text: {
+    color: 'red',
+    fontFamily: typography.JakartaExtraBold,
+  },
+});

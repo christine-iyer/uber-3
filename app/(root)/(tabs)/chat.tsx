@@ -1,9 +1,15 @@
-import { View, Text } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 
 export default function ChatScreen() {
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+    <View style={styles.chat}>
       <Text>Can yoiu talk?</Text>
     </View>
   );
 }
+const styles = StyleSheet.create({
+  chat: {
+    backgroundColor: 'green',
+    fontFamily: '../',
+  },
+});
