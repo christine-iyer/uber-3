@@ -1,3 +1,4 @@
+import arrowDown from '../assets/icons/arrow-down.png';
 import arrowUp from '../assets/icons/arrow-up.png';
 import backArrow from '../assets/icons/back-arrow.png';
 import chat from '../assets/icons/chat.png';
@@ -22,7 +23,6 @@ import selectedMarker from '../assets/icons/selected-marker.png';
 import star from '../assets/icons/star.png';
 import target from '../assets/icons/target.png';
 import to from '../assets/icons/to.png';
-import arrowDown from '../assets/icons.arrow-down.png';
 import check from '../assets/images/check.png';
 import getStarted from '../assets/images/get-started.png';
 import message from '../assets/images/message.png';
