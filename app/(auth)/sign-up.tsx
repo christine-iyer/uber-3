@@ -129,6 +129,12 @@ export default function SignUpScreen() {
         textVariant="danger"
         onPress={() => router.replace('/(auth)/welcome')}
       />
+      <CustomButton
+        title="Go to Home Page without setting up an account"
+        bgVariant="success"
+        textVariant="default"
+        onPress={() => router.replace('/(root)/(tabs)/home')}
+      />
     </View>
   );
 }
