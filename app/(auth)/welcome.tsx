@@ -59,14 +59,59 @@ export default function WelcomeScreen() {
   );
 }
 const styles = StyleSheet.create({
-  toskip: {}, //w-full flex justify-end items-end p-5
+  toskip: {
+    width: '100%',
+    flex: 1,
+    padding: 5,
+    justifyContent: 'flex-end',
+    alignItems: 'flex-end',
+  }, //w-full flex justify-end items-end p-5
   skiptext: { fontFamily: typography.JakartaExtraBold }, //text-black text-md font-JakartaBold
-  dot: { margin: 1, height: 4, width: 32, backgroundColor: '#E2E8F0' }, // }"mx-1 h-[4px] w-[32px] rounded-full bg-[#E2E8F0]",
-  activedot: {}, // "mx-1 h-[4px] w-[32px] rounded-full bg-[#0286FF]"
-  id: {}, //"flex items-center justify-center p-5"})
-  viewone: {}, //"mt-10 flex w-full flex-row items-center justify-center"
-  title: {}, //"mx-10 text-center text-3xl font-bold text-black"
-  description: {}, //"text-md font-JakartaSemiBold mx-10 mt-3 text-center text-[#858585]"
-  image: { height: 300, width: 800 }, //"h-[300px] w-full"
-  button: {}, //"mb-5 mt-10 w-11/12"
+  dot: {
+    marginHorizontal: 4,
+    height: 4,
+    width: 32,
+    backgroundColor: '#E2E8F0',
+    borderRadius: 9999,
+  },
+  activedot: {
+    marginHorizontal: 4,
+    height: 4,
+    width: 32,
+    backgroundColor: '#0286FF',
+    borderRadius: 9999,
+  },
+  id: { flex: 1, alignItems: 'center', justifyContent: 'center', padding: 20 }, //"flex items-center justify-center p-5"})
+  viewone: {
+    marginTop: 40,
+    flex: 1,
+    width: '100%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  title: {
+    marginHorizontal: 40, // ✅ mx-10 (10 * 4px = 40px)
+    textAlign: 'center', // ✅ text-center
+    fontSize: 24, // ✅ text-3xl (3xl = 24px)
+    fontWeight: 'bold', // ✅ font-bold
+    color: 'black', // ✅ text-black
+  },
+  description: {
+    fontSize: 16, // ✅ text-md (md = 16px)
+    fontFamily: 'Jakarta-SemiBold', // ✅ font-JakartaSemiBold (Assuming a custom font is set up)
+    marginHorizontal: 40, // ✅ mx-10 (10 * 4px = 40px)
+    marginTop: 12, // ✅ mt-3 (3 * 4px = 12px)
+    textAlign: 'center', // ✅ text-center
+    color: '#858585', // ✅ text-[#858585]
+  },
+  image: {
+    height: 300, // ✅ h-[300px]
+    width: '100%', // ✅ w-full
+  },
+  button: {
+    marginBottom: 20, // ✅ mb-5 (5 * 4px = 20px)
+    marginTop: 10, // ✅ mt-10 (10 * 4px = 40px)
+    width: '91.666%', // ✅ w-11/12 (11/12 = 91.66%)
+  },
 });
