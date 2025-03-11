@@ -15,40 +15,29 @@ import { useUser, useAuth } from '@clerk/clerk-expo';
 import * as Location from 'expo-location';
 import { router } from 'expo-router';
 import { useState, useEffect } from 'react';
-import { Text, View, TouchableOpacity, Image, FlatList, ActivityIndicator } from 'react-native';
+import {
+  Text,
+  View,
+  TouchableOpacity,
+  Image,
+  FlatList,
+  ActivityIndicator,
+  StyleSheet,
+} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { typography } from 'styles/typography';
-
-import GoogleTextInput from './components/GoogleTextInput';
-import Map from './components/Map';
-import RideCard from './components/RideCard';
-import { icons, images } from './constants';
-import { useFetch } from './lib/fetch';
-import { useLocationStore } from './store';
-import { Ride } from './types/type';
-
-const Home = () => {
-  const { user } = useUser();
-  const { signOut } = useAuth();
-
-  const { setUserLocation, setDestinationLocation } = useLocationStore();
-
-  const handleSignOut = () => {
+const handleSignOut = () => {
     signOut();
     router.replace('/(auth)/sign-in');
   };
 
-  const [hasPermission, setHasPermission] = useState<boolean>(false);
+// import GoogleTextInput from './components/GoogleTextInput';
+// import Map from './components/Map';
+// import RideCard from './components/RideCard';
+// import { Ride } from './types/type';
+import { icons, images } from '../../../constants/index';
 
-  const { data: recentRides, loading, error } = useFetch<Ride[]>(`/(api)/ride/${user?.id}`);
-
-  useEffect(() => {
-    (async () => {
-      const { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== 'granted') {
-        setHasPermission(false);
-        return;
-      }
+  
 
       const location = await Location.getCurrentPositionAsync({});
 
@@ -79,7 +68,8 @@ const Home = () => {
     <SafeAreaView style={styles.safeview}>
       <FlatList
         data={recentRides?.slice(0, 5)}
-        renderItem={({ item }) => <RideCard ride={item} />}
+        renderItem={({ item }) =>
+          <RideCard ride={item} />}
         keyExtractor={(item, index) => index.toString()}
         style={styles.list}
         keyboardShouldPersistTaps="handled"
