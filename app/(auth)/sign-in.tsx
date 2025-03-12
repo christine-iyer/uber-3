@@ -2,7 +2,7 @@ import { useRouter } from 'expo-router';
 import { View, Text, StyleSheet } from 'react-native';
 import { typography } from 'styles/typography';
 
-import CustomButton from '../components/CustomButton'; // ✅ Import CustomButton
+import CustomButton from '../../components/CustomButton'; // ✅ Import CustomButton
 
 export default function SignInScreen() {
   const router = useRouter();

@@ -106,8 +106,8 @@
 //     </View>
 //   );
 // }
-import CustomButton from 'app/components/CustomButton';
-import InputField from 'app/components/InputField';
+import CustomButton from 'components/CustomButton';
+import InputField from 'components/InputField';
 import { useRouter } from 'expo-router';
 import { View, Text } from 'react-native';
 
