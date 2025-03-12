@@ -1,34 +1,52 @@
-import { router } from 'expo-router';
-import { FlatList, View } from 'react-native';
+import { useRouter } from 'expo-router';
+import { Text, View, StyleSheet } from 'react-native';
+import { typography } from 'styles/typography';
 
-import CustomButton from '@/components/CustomButton';
-import DriverCard from '@/components/DriverCard';
-import RideLayout from '@/components/RideLayout';
-import { useDriverStore } from '@/store';
+import CustomButton from '../../components/CustomButton';
 
 const ConfirmRide = () => {
-  const { drivers, selectedDriver, setSelectedDriver } = useDriverStore();
+  const router = useRouter();
 
   return (
-    <RideLayout title="Choose a Rider" snapPoints={['65%', '85%']}>
-      <FlatList
-        data={drivers}
-        keyExtractor={(item, index) => index.toString()}
-        renderItem={({ item, index }) => (
-          <DriverCard
-            item={item}
-            selected={selectedDriver!}
-            setSelected={() => setSelectedDriver(item.id!)}
-          />
-        )}
-        ListFooterComponent={() => (
-          <View className="mx-5 mt-10">
-            <CustomButton title="Select Ride" onPress={() => router.push('/(root)/book-ride')} />
-          </View>
-        )}
+    <View style={styles.title}>
+      <View style={styles.viewone}>
+        <Text style={styles.textone}>From</Text>
+      </View>
+
+      <View style={styles.viewtwo}>
+        <Text style={styles.texttwo}>To</Text>
+      </View>
+
+      <CustomButton
+        title="Find Now"
+        bgVariant="success"
+        textVariant="default"
+        onPress={() => router.push(`/(root)/confirm-ride`)}
       />
-    </RideLayout>
+    </View>
   );
 };
+
+const styles = StyleSheet.create({
+  title: {},
+  viewone: { marginTop: 12, marginBottom: 12 },
+  textone: {
+    fontFamily: typography.JakartaSemiBold,
+    marginBottom: 12,
+    fontSize: 18,
+    lineHeight: 28,
+  }, //"mb-3 text-lg"
+
+  confirm: { marginTop: 20 },
+
+  viewtwo: { marginTop: 12, marginBottom: 12 },
+
+  texttwo: {
+    fontFamily: typography.JakartaSemiBold,
+    marginBottom: 12,
+    fontSize: 18,
+    lineHeight: 28,
+  },
+});
 
 export default ConfirmRide;

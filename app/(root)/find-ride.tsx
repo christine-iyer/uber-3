@@ -1,45 +1,52 @@
-import { router } from 'expo-router';
-import { Text, View } from 'react-native';
+import { useRouter } from 'expo-router';
+import { Text, View, StyleSheet } from 'react-native';
+import { typography } from 'styles/typography';
 
 import CustomButton from '../../components/CustomButton';
-import GoogleTextInput from '../../components/GoogleTextInput';
-import { icons } from './../../constants/index';
 
 const FindRide = () => {
-     const { userAddress, destinationAddress, setDestinationLocation, setUserLocation } =
-return (
-          <RideLayout title="Ride">
-               <View className="my-3">
-                    <Text className="font-JakartaSemiBold mb-3 text-lg">From</Text>
+  const router = useRouter();
 
-                    <GoogleTextInput
-                         icon={icons.target}
-                         initialLocation={userAddress!}
-                         containerStyle="bg-neutral-100"
-                         textInputBackgroundColor="#f5f5f5"
-                         handlePress={(location) => setUserLocation(location)}
-                    />
-               </View>
+  return (
+    <View style={styles.title}>
+      <View style={styles.viewone}>
+        <Text style={styles.textone}>From</Text>
+      </View>
 
-               <View className="my-3">
-                    <Text className="font-JakartaSemiBold mb-3 text-lg">To</Text>
+      <View style={styles.viewtwo}>
+        <Text style={styles.texttwo}>To</Text>
+      </View>
 
-                    <GoogleTextInput
-                         icon={icons.map}
-                         initialLocation={destinationAddress!}
-                         containerStyle="bg-neutral-100"
-                         textInputBackgroundColor="transparent"
-                         handlePress={(location) => setDestinationLocation(location)}
-                    />
-               </View>
-
-               <CustomButton
-                    title="Find Now"
-                    onPress={() => router.push(`/(root)/confirm-ride`)}
-                    className="mt-5"
-               />
-          </RideLayout>
-     );
+      <CustomButton
+        title="Find Now"
+        bgVariant="success"
+        textVariant="default"
+        onPress={() => router.push(`/(root)/confirm-ride`)}
+      />
+    </View>
+  );
 };
+
+const styles = StyleSheet.create({
+  title: {},
+  viewone: { marginTop: 12, marginBottom: 12 },
+  textone: {
+    fontFamily: typography.JakartaSemiBold,
+    marginBottom: 12,
+    fontSize: 18,
+    lineHeight: 28,
+  }, //"mb-3 text-lg"
+
+  confirm: { marginTop: 20 },
+
+  viewtwo: { marginTop: 12, marginBottom: 12 },
+
+  texttwo: {
+    fontFamily: typography.JakartaSemiBold,
+    marginBottom: 12,
+    fontSize: 18,
+    lineHeight: 28,
+  },
+});
 
 export default FindRide;

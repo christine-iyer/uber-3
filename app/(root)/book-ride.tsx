@@ -1,89 +1,52 @@
-import { useUser } from '@clerk/clerk-expo';
-import { StripeProvider } from '@stripe/stripe-react-native';
-import { Image, Text, View } from 'react-native';
+import { useRouter } from 'expo-router';
+import { Text, View, StyleSheet } from 'react-native';
+import { typography } from 'styles/typography';
 
-import Payment from '@/components/Payment';
-import RideLayout from '@/components/RideLayout';
-import { icons } from '@/constants';
-import { formatTime } from '@/lib/utils';
-import { useDriverStore, useLocationStore } from '@/store';
+import CustomButton from '../../components/CustomButton';
 
 const BookRide = () => {
-  const { user } = useUser();
-  const { userAddress, destinationAddress } = useLocationStore();
-  const { drivers, selectedDriver } = useDriverStore();
-
-  const driverDetails = drivers?.filter((driver) => +driver.id === selectedDriver)[0];
+  const router = useRouter();
 
   return (
-    <StripeProvider
-      publishableKey={process.env.EXPO_PUBLIC_STRIPE_PUBLISHABLE_KEY!}
-      merchantIdentifier="merchant.com.uber"
-      urlScheme="myapp">
-      <RideLayout title="Book Ride">
-        <>
-          <Text className="font-JakartaSemiBold mb-3 text-xl">Ride Information</Text>
+    <View style={styles.title}>
+      <View style={styles.viewone}>
+        <Text style={styles.textone}>From</Text>
+      </View>
 
-          <View className="mt-10 flex w-full flex-col items-center justify-center">
-            <Image
-              source={{ uri: driverDetails?.profile_image_url }}
-              className="h-28 w-28 rounded-full"
-            />
+      <View style={styles.viewtwo}>
+        <Text style={styles.texttwo}>To</Text>
+      </View>
 
-            <View className="mt-5 flex flex-row items-center justify-center space-x-2">
-              <Text className="font-JakartaSemiBold text-lg">{driverDetails?.title}</Text>
-
-              <View className="flex flex-row items-center space-x-0.5">
-                <Image source={icons.star} className="h-5 w-5" resizeMode="contain" />
-                <Text className="font-JakartaRegular text-lg">{driverDetails?.rating}</Text>
-              </View>
-            </View>
-          </View>
-
-          <View className="bg-general-600 mt-5 flex w-full flex-col items-start justify-center rounded-3xl px-5 py-3">
-            <View className="flex w-full flex-row items-center justify-between border-b border-white py-3">
-              <Text className="font-JakartaRegular text-lg">Ride Price</Text>
-              <Text className="font-JakartaRegular text-lg text-[#0CC25F]">
-                ${driverDetails?.price}
-              </Text>
-            </View>
-
-            <View className="flex w-full flex-row items-center justify-between border-b border-white py-3">
-              <Text className="font-JakartaRegular text-lg">Pickup Time</Text>
-              <Text className="font-JakartaRegular text-lg">
-                {formatTime(driverDetails?.time!)}
-              </Text>
-            </View>
-
-            <View className="flex w-full flex-row items-center justify-between py-3">
-              <Text className="font-JakartaRegular text-lg">Car Seats</Text>
-              <Text className="font-JakartaRegular text-lg">{driverDetails?.car_seats}</Text>
-            </View>
-          </View>
-
-          <View className="mt-5 flex w-full flex-col items-start justify-center">
-            <View className="border-general-700 mt-3 flex w-full flex-row items-center justify-start border-b border-t py-3">
-              <Image source={icons.to} className="h-6 w-6" />
-              <Text className="font-JakartaRegular ml-2 text-lg">{userAddress}</Text>
-            </View>
-
-            <View className="border-general-700 flex w-full flex-row items-center justify-start border-b py-3">
-              <Image source={icons.point} className="h-6 w-6" />
-              <Text className="font-JakartaRegular ml-2 text-lg">{destinationAddress}</Text>
-            </View>
-          </View>
-
-          <Payment
-            fullName={user?.fullName!}
-            email={user?.emailAddresses[0].emailAddress!}
-            amount={driverDetails?.price!}
-            driverId={driverDetails?.id}
-            rideTime={driverDetails?.time!}
-          />
-        </>
-      </RideLayout>
-    </StripeProvider>
+      <CustomButton
+        title="Find Now"
+        bgVariant="success"
+        textVariant="default"
+        onPress={() => router.push(`/(root)/confirm-ride`)}
+      />
+    </View>
   );
 };
+
+const styles = StyleSheet.create({
+  title: {},
+  viewone: { marginTop: 12, marginBottom: 12 },
+  textone: {
+    fontFamily: typography.JakartaSemiBold,
+    marginBottom: 12,
+    fontSize: 18,
+    lineHeight: 28,
+  }, //"mb-3 text-lg"
+
+  confirm: { marginTop: 20 },
+
+  viewtwo: { marginTop: 12, marginBottom: 12 },
+
+  texttwo: {
+    fontFamily: typography.JakartaSemiBold,
+    marginBottom: 12,
+    fontSize: 18,
+    lineHeight: 28,
+  },
+});
 
 export default BookRide;
