@@ -76,10 +76,20 @@ const styles = StyleSheet.create({
   container: { flex: 1, alignItems: 'center', justifyContent: 'center', padding: 20 },
   image: { width: 112, height: 112, borderRadius: 56, marginTop: 10 },
   titleview: { flexDirection: 'column', alignItems: 'center', marginTop: 10 },
-  titletext: { fontSize: 18, fontWeight: '600', marginTop: 10 },
+  titletext: {
+    fontSize: 18,
+    fontWeight: '600',
+    marginTop: 10,
+    fontFamily: typography.JakartaSemiBold,
+  },
   starsview: { flexDirection: 'row', alignItems: 'center', marginTop: 5 },
   starstitle: { width: 20, height: 20 },
-  ratingtext: { fontSize: 16, fontWeight: '500', marginLeft: 5 },
+  ratingtext: {
+    fontSize: 16,
+    fontWeight: '500',
+    marginLeft: 5,
+    fontFamily: typography.JakartaRegular,
+  },
 
   priceviewone: {
     backgroundColor: '#f5f5f5',
@@ -95,8 +105,13 @@ const styles = StyleSheet.create({
     borderBottomColor: '#ddd',
     paddingBottom: 5,
   },
-  pricetextone: { fontSize: 16, fontWeight: '500' },
-  pricetexttwo: { fontSize: 16, fontWeight: '500', color: '#0CC25F' },
+  pricetextone: { fontSize: 16, fontWeight: '500', fontFamily: typography.JakartaExtraBold },
+  pricetexttwo: {
+    fontSize: 16,
+    fontWeight: '500',
+    color: '#0CC25F',
+    fontFamily: typography.JakartaMedium,
+  },
 
   timeview: {
     flexDirection: 'row',
@@ -106,12 +121,12 @@ const styles = StyleSheet.create({
     paddingBottom: 5,
     marginTop: 5,
   },
-  timetextone: { fontSize: 16, fontWeight: '500' },
-  timetexttwo: { fontSize: 16, fontWeight: '500' },
+  timetextone: { fontSize: 16, fontWeight: '500', fontFamily: typography.JakartaMedium },
+  timetexttwo: { fontSize: 16, fontWeight: '500', fontFamily: typography.JakartaMedium },
 
   seatsview: { flexDirection: 'row', justifyContent: 'space-between', paddingTop: 5 },
-  seatstextone: { fontSize: 16, fontWeight: '500' },
-  seatstexttwo: { fontSize: 16, fontWeight: '500' },
+  seatstextone: { fontSize: 16, fontWeight: '500', fontFamily: typography.JakartaMedium },
+  seatstexttwo: { fontSize: 16, fontWeight: '500', fontFamily: typography.JakartaMedium },
 
   addressviewone: { marginTop: 10, width: '100%' },
   addressviewtwo: {
@@ -136,3 +151,22 @@ const styles = StyleSheet.create({
 });
 
 export default BookRide;
+
+// titletext: {}, //"text-lg font-JakartaSemiBold">
+// starsview: {}, //"flex flex-row items-center space-x-0.5"
+// starstitle: {},
+// ratingtext: {},
+// priceviewone: {},  //"flex flex-col w-full items-start justify-center py-3 px-5 rounded-3xl bg-general-600 mt-5"
+// priceviewtwo: {}, //"flex flex-row items-center justify-between w-full border-b border-white py-3"
+// pricetextone: {}, //"text-lg font-JakartaRegular"
+// pricetexttwo: {}, //"text-lg font-JakartaRegular text-[#0CC25F]"
+// timeview: {}, //"flex flex-row items-center justify-between w-full border-b border-white py-3"
+// timetextone: {}, //"text-lg font-JakartaRegular"
+// timetexttwo: {},  //"text-lg font-JakartaRegular"
+// seatsview: {},  //"flex flex-row items-center justify-between w-full py-3"
+// seatstextone: {}, //"text-lg font-JakartaRegular"
+// seatstexttwo: {}, //"text-lg font-JakartaRegular
+// addressviewone: {}, //"flex flex-col w-full items-start justify-center mt-5"
+// addressviewtwo: {},  //"flex flex-row items-center justify-start mt-3 border-t border-b border-general-700 w-full py-3"
+// addresstext: {},  //"text-lg font-JakartaRegular ml-2"
+// destinationtext: {}  //"text-lg font-JakartaRegular ml-2"
