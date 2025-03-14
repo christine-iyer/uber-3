@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '500',
     marginLeft: 5,
-    fontFamily: typography.JakartaRegular,
+    fontFamily: typography.Jakarta,
   },
 
   priceviewone: {

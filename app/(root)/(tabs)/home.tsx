@@ -7,19 +7,26 @@ export default function HomeScreen() {
   const router = useRouter();
   return (
     <View style={styles.container}>
+      <Text style={styles.heading}>⌮</Text>
+      <CustomButton
+        title="➡ to Profile Page"
+        bgVariant="outline"
+        textVariant="secondary"
+        onPress={() => router.push('/(root)/(tabs)/profile')}
+      />
       <Text style={styles.heading}>🚗</Text>
       <CustomButton
         title="➡ to Rides"
-        bgVariant="success"
-        textVariant="default"
+        bgVariant="outline"
+        textVariant="danger"
         onPress={() => router.push('/(root)/(tabs)/rides')}
       />
-      <Text style={styles.heading}>💇🏻‍♀️</Text>
+      <Text style={styles.heading}>🚕</Text>
       <CustomButton
-        title="➡ to Profile Page"
-        bgVariant="success"
-        textVariant="default"
-        onPress={() => router.push('/(root)/(tabs)/profile')}
+        title="➡ to Schedule Ride"
+        bgVariant="outline"
+        textVariant="secondary"
+        onPress={() => router.push('/(root)/book-ride')}
       />
     </View>
   );
