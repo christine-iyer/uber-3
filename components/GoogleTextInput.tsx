@@ -1,75 +1,32 @@
-import { View, Image } from 'react-native';
+import React from 'react';
+import { View } from 'react-native';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 
-import { icons } from '../constants';
-import { GoogleInputProps } from '../types/type';
-
-const googlePlacesApiKey = process.env.EXPO_PUBLIC_PLACES_API_KEY;
-
-const GoogleTextInput = ({
-  icon,
-  initialLocation,
-  containerStyle,
-  textInputBackgroundColor,
-  handlePress,
-}: GoogleInputProps) => {
+const GooglePlacesInput = () => {
   return (
-    <View
-      className={`relative z-50 flex flex-row items-center justify-center rounded-xl ${containerStyle}`}>
+    <View style={{ flex: 1, padding: 10 }}>
       <GooglePlacesAutocomplete
-        fetchDetails
-        placeholder="Search"
-        debounce={200}
-        styles={{
-          textInputContainer: {
-            alignItems: 'center',
-            justifyContent: 'center',
-            borderRadius: 20,
-            marginHorizontal: 20,
-            position: 'relative',
-            shadowColor: '#d4d4d4',
-          },
-          textInput: {
-            backgroundColor: textInputBackgroundColor ? textInputBackgroundColor : 'white',
-            fontSize: 16,
-            fontWeight: '600',
-            marginTop: 5,
-            width: '100%',
-            borderRadius: 200,
-          },
-          listView: {
-            backgroundColor: textInputBackgroundColor ? textInputBackgroundColor : 'white',
-            position: 'relative',
-            top: 0,
-            width: '100%',
-            borderRadius: 10,
-            shadowColor: '#d4d4d4',
-            zIndex: 99,
-          },
-        }}
+        placeholder="Search for a place"
+        fetchDetails // Returns detailed place data
         onPress={(data, details = null) => {
-          handlePress({
-            latitude: details?.geometry.location.lat!,
-            longitude: details?.geometry.location.lng!,
-            address: data.description,
-          });
+          console.log('Place Data:', data);
+          console.log('Full Details:', details?.geometry.location);
         }}
         query={{
-          key: googlePlacesApiKey,
+          key: 'YOUR_GOOGLE_API_KEY', // Replace with your API key
           language: 'en',
         }}
-        renderLeftButton={() => (
-          <View className="h-6 w-6 items-center justify-center">
-            <Image source={icon ? icon : icons.search} className="h-6 w-6" resizeMode="contain" />
-          </View>
-        )}
-        textInputProps={{
-          placeholderTextColor: 'gray',
-          placeholder: initialLocation ?? 'Where do you want to go?',
+        styles={{
+          textInput: {
+            height: 50,
+            borderRadius: 5,
+            paddingLeft: 10,
+            fontSize: 16,
+          },
         }}
       />
     </View>
   );
 };
 
-export default GoogleTextInput;
+export default GooglePlacesInput;

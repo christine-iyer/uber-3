@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
     fontFamily: typography.JakartaSemiBold,
     fontSize: 18,
     lineHeight: 28,
-    color: 'pink',
+    color: 'black',
     marginBottom: 8,
   },
 });
