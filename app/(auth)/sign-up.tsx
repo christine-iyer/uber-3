@@ -1,7 +1,7 @@
 import { useSignUp } from '@clerk/clerk-expo';
 import { useRouter } from 'expo-router';
 import * as React from 'react';
-import { Text, TextInput, Button, View, StyleSheet } from 'react-native';
+import { Text, TextInput, Button, View, StyleSheet, Alert } from 'react-native';
 import { typography } from 'styles/typography';
 
 export default function SignUpScreen() {
@@ -18,7 +18,23 @@ export default function SignUpScreen() {
   const onSignUpPress = async () => {
     if (!isLoaded) return;
 
-    // Start sign-up process using email and password provided
+    // Validate email and username
+    if (!emailAddress) {
+      Alert.alert('Error', 'Email address is required.');
+      return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(emailAddress)) {
+      Alert.alert('Error', 'Invalid email address format.');
+      return;
+    }
+
+    if (!username.match(/^[a-zA-Z0-9_-]+$/)) {
+      Alert.alert('Error', 'Username can only contain letters, numbers, underscores, or hyphens.');
+      return;
+    }
+
     try {
       await signUp.create({
         username,
@@ -30,12 +46,10 @@ export default function SignUpScreen() {
       await signUp.prepareEmailAddressVerification({ strategy: 'email_code' });
 
       // Set 'pendingVerification' to true to display second form
-      // and capture OTP code
       setPendingVerification(true);
     } catch (err) {
-      // See https://clerk.com/docs/custom-flows/error-handling
-      // for more info on error handling
       console.error(JSON.stringify(err, null, 2));
+      Alert.alert('Error', 'An error occurred during sign-up. Please try again.');
     }
   };
 
