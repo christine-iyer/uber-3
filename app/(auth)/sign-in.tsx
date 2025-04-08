@@ -1,4 +1,4 @@
-import { useSignIn } from '@clerk/clerk-expo'; // ✅ Import useSignIn from Clerk
+import { useSignIn, Clerk } from '@clerk/clerk-expo';
 import { useRouter } from 'expo-router';
 import { useState, useCallback } from 'react';
 import { View, Text, StyleSheet, Alert, TextInput, ActivityIndicator } from 'react-native';
@@ -36,6 +36,14 @@ export default function SignInScreen() {
 
     setLoading(true);
     try {
+      // Check if a session already exists
+      const activeSession = await Clerk.session();
+      if (activeSession) {
+        // Sign out the existing session
+        await Clerk.signOut();
+      }
+
+      // Proceed with sign-in
       const signInAttempt = await signIn.create({
         identifier: form.email,
         password: form.password,
@@ -58,11 +66,20 @@ export default function SignInScreen() {
     }
   }, [isLoaded, form]);
 
+  const onSignOutPress = async () => {
+    try {
+      await Clerk.signOut();
+      router.replace('/(auth)/sign-in');
+    } catch (err) {
+      console.error('Error signing out:', err);
+      Alert.alert('Error', 'An error occurred while signing out. Please try again.');
+    }
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.heading}>Sign In Here</Text>
 
-      {/* Email Input */}
       <TextInput
         style={styles.input}
         placeholder="Email"
@@ -72,7 +89,6 @@ export default function SignInScreen() {
         autoCapitalize="none"
       />
 
-      {/* Password Input */}
       <TextInput
         style={styles.input}
         placeholder="Password"
@@ -81,7 +97,6 @@ export default function SignInScreen() {
         secureTextEntry
       />
 
-      {/* Loading Indicator */}
       {loading ? (
         <ActivityIndicator size="large" color="#0000ff" />
       ) : (
@@ -93,7 +108,6 @@ export default function SignInScreen() {
         />
       )}
 
-      {/* 🔙 Back Button */}
       <CustomButton
         title="Back"
         bgVariant="secondary"
@@ -101,18 +115,23 @@ export default function SignInScreen() {
         onPress={() => router.back()}
       />
 
-      {/* 🏠 Go to Home */}
       <CustomButton
         title="Go to Home"
         bgVariant="success"
         textVariant="default"
         onPress={() => router.replace('/(root)/(tabs)/home')}
       />
+
+      <CustomButton
+        title="Sign Out"
+        bgVariant="danger"
+        textVariant="default"
+        onPress={onSignOutPress}
+      />
     </View>
   );
 }
 
-// ✅ Styles for the Sign-In Screen
 const styles = StyleSheet.create({
   container: {
     flex: 1,
