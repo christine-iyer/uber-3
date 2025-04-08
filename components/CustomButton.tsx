@@ -56,7 +56,7 @@ const CustomButton = ({
 
 const styles = StyleSheet.create({
   buttonBase: {
-    width: '100%',
+    width: '50%',
     borderRadius: 999, // Equivalent to `rounded-full`
     paddingVertical: 12, // Equivalent to `p-3`
     paddingHorizontal: 16,
@@ -67,6 +67,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.7,
     shadowRadius: 4,
     shadowOffset: { width: 0, height: 2 },
+    margin: 8,
   },
 
   // ✅ Button Background Variants
