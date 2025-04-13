@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@clerk/clerk-expo": "^2.9.9",
+    "axios": "^1.8.4",
     "dotenv": "^16.4.7",
     "expo": "^52.0.35",
     "expo-font": "^13.0.4",
