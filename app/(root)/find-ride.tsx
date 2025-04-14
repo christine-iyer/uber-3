@@ -8,6 +8,7 @@ import CustomButton from '../../components/CustomButton';
 import CustomInput from '../../components/CustomInput';
 
 const FindRide = () => {
+  const GOOGLE_MAPS_API_KEY = '';
   const [form, setForm] = useState({
     from: '',
     to: '',
@@ -58,7 +59,21 @@ const FindRide = () => {
 
   return (
     <View style={styles.container}>
-      <CustomInput
+      <TextInput
+        style={styles.input}
+        placeholder="From"
+        value={form.from}
+        onChangeText={(value) => setForm({ ...form, from: value })}
+      />
+
+      <TextInput
+        style={styles.input}
+        placeholder="To"
+        value={form.to}
+        onChangeText={(value) => setForm({ ...form, to: value })}
+      />
+
+      {/* <CustomInput
         label="From"
         placeholder="Enter your location"
         value={form.from}
@@ -70,7 +85,7 @@ const FindRide = () => {
         placeholder="Where are you going?"
         value={form.to}
         onChangeText={(value) => setForm({ ...form, to: value })}
-      />
+      /> */}
 
       <CustomButton
         title={loading ? 'Calculating...' : 'Find Now'}
@@ -80,13 +95,16 @@ const FindRide = () => {
         disabled={loading}
       />
 
-      {distance && <Text style={styles.result}>Distance: {distance || 'N/A'}</Text>}
+      {distance && <Text style={styles.result}>Distance: {distance || 'N/A'} between A and B</Text>}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: { padding: 20, flex: 1, justifyContent: 'center' },
+  input: {
+    backgroundColor: '#f0f0f0',
+  },
   result: {
     marginTop: 20,
     fontSize: 16,
@@ -96,3 +114,5 @@ const styles = StyleSheet.create({
 });
 
 export default FindRide;
+//test api     https://maps.googleapis.com/maps/api/distancematrix/json?origins=Boston+MA&destinations=New+York+NY&key=YOUR_API_KEY
+//

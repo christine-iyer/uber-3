@@ -4,7 +4,6 @@ import { View, Text, TextInput, StyleSheet } from 'react-native';
 const CustomInput = ({ label, placeholder, value, onChangeText, style }) => {
   return (
     <View style={styles.container}>
-      {label && <Text style={styles.label}>{label}</Text>}
       <TextInput
         style={[styles.input, style]}
         placeholder={placeholder}
