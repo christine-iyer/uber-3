@@ -1,103 +1,91 @@
-import { GOOGLE_MAPS_API_KEY } from '@env';
-import axios from 'axios';
+import { useRouter } from 'expo-router';
 import { useState } from 'react';
-import { Text, View, StyleSheet, Alert, TextInput } from 'react-native';
+import { View, Text, StyleSheet, TextInput, ActivityIndicator } from 'react-native';
+import { typography } from 'styles/typography';
 
 import CustomButton from '../../components/CustomButton';
 
-const FindRide = () => {
+export default function SignInScreen() {
+  const router = useRouter();
+
   const [form, setForm] = useState({
-    from: '',
-    to: '',
+    email: '',
+    password: '',
   });
-  const [distance, setDistance] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
-  const calculateDistance = async () => {
-    if (!form.from || !form.to) {
-      Alert.alert('Error', 'Please fill in both locations.');
-      return;
-    }
-
-    console.log('GOOGLE_MAPS_API_KEY:', GOOGLE_MAPS_API_KEY); // Debug API key
-
+  const onSignInPress = () => {
     setLoading(true);
 
-    try {
-      const response = await axios.get(`https://maps.googleapis.com/maps/api/distancematrix/json`, {
-        params: {
-          origins: form.from,
-          destinations: form.to,
-          key: GOOGLE_MAPS_API_KEY,
-        },
-      });
-
-      const data = response.data;
-
-      if (
-        data.status === 'OK' &&
-        data.rows &&
-        data.rows[0] &&
-        data.rows[0].elements &&
-        data.rows[0].elements[0] &&
-        data.rows[0].elements[0].distance
-      ) {
-        const distanceText = data.rows[0].elements[0].distance.text;
-        setDistance(distanceText);
-        Alert.alert('Distance', `The distance is ${distanceText || 'N/A'}.`);
-      } else {
-        Alert.alert('Error', 'Unable to calculate distance. Please try again.');
-      }
-    } catch (error) {
-      console.error('API Error:', error.response ? error.response.data : error.message);
-      Alert.alert('Error', 'An error occurred while calculating the distance.');
-    } finally {
+    // Simulate a delay for loading (optional)
+    setTimeout(() => {
       setLoading(false);
-    }
+      router.replace('/(root)/(tabs)/home'); // Navigate to the home page
+    }, 1000);
   };
 
   return (
     <View style={styles.container}>
+      <Text style={styles.heading}>Sign In Here</Text>
+
       <TextInput
         style={styles.input}
-        placeholder="From"
-        value={form.from}
-        onChangeText={(value) => setForm({ ...form, from: value })}
+        placeholder="Email"
+        value={form.email}
+        onChangeText={(text) => setForm((prev) => ({ ...prev, email: text }))}
+        keyboardType="email-address"
+        autoCapitalize="none"
       />
 
       <TextInput
         style={styles.input}
-        placeholder="To"
-        value={form.to}
-        onChangeText={(value) => setForm({ ...form, to: value })}
+        placeholder="Password"
+        value={form.password}
+        onChangeText={(text) => setForm((prev) => ({ ...prev, password: text }))}
+        secureTextEntry
       />
+
+      {loading ? (
+        <ActivityIndicator size="large" color="#0000ff" />
+      ) : (
+        <CustomButton
+          title="Sign In"
+          bgVariant="primary"
+          textVariant="default"
+          onPress={onSignInPress}
+        />
+      )}
 
       <CustomButton
-        title={loading ? 'Calculating...' : 'Find Now'}
-        onPress={calculateDistance}
-        disabled={loading}
+        title="Back"
+        bgVariant="secondary"
+        textVariant="secondary"
+        onPress={() => router.back()}
       />
-
-      {distance && <Text style={styles.result}>Distance: {distance || 'N/A'}</Text>}
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
-  container: { padding: 20, flex: 1, justifyContent: 'center' },
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
+  },
+  heading: {
+    marginBottom: 20,
+    fontSize: 24,
+    fontFamily: typography.JakartaExtraBold,
+  },
   input: {
+    width: '100%',
     height: 50,
     borderWidth: 1,
     borderColor: '#ccc',
     borderRadius: 8,
     paddingHorizontal: 10,
-    marginBottom: 16,
-  },
-  result: {
-    marginTop: 20,
+    marginBottom: 15,
     fontSize: 16,
-    color: 'green',
   },
 });
-
-export default FindRide;

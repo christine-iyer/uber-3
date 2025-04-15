@@ -24,13 +24,13 @@ const FindRide = () => {
     setLoading(true);
 
     try {
-      const response = await axios.get(`https://maps.googleapis.com/maps/api/distancematrix/json`, {
-        params: {
-          origins: form.from,
-          destinations: form.to,
-          key: GOOGLE_MAPS_API_KEY,
-        },
-      });
+      const apiUrl = `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${encodeURIComponent(
+        form.from
+      )}&destinations=${encodeURIComponent(form.to)}&key=${GOOGLE_MAPS_API_KEY}`;
+
+      console.log('API URL:', apiUrl); // Log the full API URL
+
+      const response = await axios.get(apiUrl);
 
       const data = response.data;
       console.log('API Response:', data); // Debug API response
@@ -69,14 +69,18 @@ const FindRide = () => {
         style={styles.input}
         placeholder="From"
         value={form.from}
-        onChangeText={(value) => setForm({ ...form, from: value })}
+        onChangeText={(value) => setForm((prev) => ({ ...prev, from: value }))}
+        autoCapitalize="none"
+        autoCorrect={false}
       />
 
       <TextInput
         style={styles.input}
         placeholder="To"
         value={form.to}
-        onChangeText={(value) => setForm({ ...form, to: value })}
+        onChangeText={(value) => setForm((prev) => ({ ...prev, to: value }))}
+        autoCapitalize="none"
+        autoCorrect={false}
       />
 
       <CustomButton
