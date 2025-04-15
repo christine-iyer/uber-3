@@ -1,157 +1,103 @@
-import { useSignIn, Clerk } from '@clerk/clerk-expo';
-import { useRouter } from 'expo-router';
-import { useState, useCallback } from 'react';
-import { View, Text, StyleSheet, Alert, TextInput, ActivityIndicator } from 'react-native';
-import { typography } from 'styles/typography';
+import { GOOGLE_MAPS_API_KEY } from '@env';
+import axios from 'axios';
+import { useState } from 'react';
+import { Text, View, StyleSheet, Alert, TextInput } from 'react-native';
 
 import CustomButton from '../../components/CustomButton';
 
-export default function SignInScreen() {
-  const router = useRouter();
-  const { signIn, setActive, isLoaded } = useSignIn();
-
+const FindRide = () => {
   const [form, setForm] = useState({
-    email: '',
-    password: '',
+    from: '',
+    to: '',
   });
+  const [distance, setDistance] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
-  const validateForm = () => {
-    if (!form.email || !form.password) {
-      Alert.alert('Error', 'Please fill in both email and password.');
-      return false;
+  const calculateDistance = async () => {
+    if (!form.from || !form.to) {
+      Alert.alert('Error', 'Please fill in both locations.');
+      return;
     }
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(form.email)) {
-      Alert.alert('Error', 'Please enter a valid email address.');
-      return false;
-    }
-    return true;
-  };
 
-  const onSignInPress = useCallback(async () => {
-    if (!isLoaded) return;
-
-    if (!validateForm()) return;
+    console.log('GOOGLE_MAPS_API_KEY:', GOOGLE_MAPS_API_KEY); // Debug API key
 
     setLoading(true);
-    try {
-      // Check if a session already exists
-      const activeSession = await Clerk.session();
-      if (activeSession) {
-        // Sign out the existing session
-        await Clerk.signOut();
-      }
 
-      // Proceed with sign-in
-      const signInAttempt = await signIn.create({
-        identifier: form.email,
-        password: form.password,
+    try {
+      const response = await axios.get(`https://maps.googleapis.com/maps/api/distancematrix/json`, {
+        params: {
+          origins: form.from,
+          destinations: form.to,
+          key: GOOGLE_MAPS_API_KEY,
+        },
       });
 
-      if (signInAttempt.status === 'complete') {
-        await setActive({ session: signInAttempt.createdSessionId });
-        router.replace('/(root)/(tabs)/home');
+      const data = response.data;
+
+      if (
+        data.status === 'OK' &&
+        data.rows &&
+        data.rows[0] &&
+        data.rows[0].elements &&
+        data.rows[0].elements[0] &&
+        data.rows[0].elements[0].distance
+      ) {
+        const distanceText = data.rows[0].elements[0].distance.text;
+        setDistance(distanceText);
+        Alert.alert('Distance', `The distance is ${distanceText || 'N/A'}.`);
       } else {
-        console.log(JSON.stringify(signInAttempt, null, 2));
-        Alert.alert('Error', 'Log in failed. Please try again.');
+        Alert.alert('Error', 'Unable to calculate distance. Please try again.');
       }
-    } catch (err: any) {
-      console.log(JSON.stringify(err, null, 2));
-      const errorMessage =
-        err?.errors?.[0]?.longMessage || 'An unexpected error occurred. Please try again.';
-      Alert.alert('Error', errorMessage);
+    } catch (error) {
+      console.error('API Error:', error.response ? error.response.data : error.message);
+      Alert.alert('Error', 'An error occurred while calculating the distance.');
     } finally {
       setLoading(false);
-    }
-  }, [isLoaded, form]);
-
-  const onSignOutPress = async () => {
-    try {
-      await Clerk.signOut();
-      router.replace('/(auth)/sign-in');
-    } catch (err) {
-      console.error('Error signing out:', err);
-      Alert.alert('Error', 'An error occurred while signing out. Please try again.');
     }
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.heading}>Sign In Here</Text>
-
       <TextInput
         style={styles.input}
-        placeholder="Email"
-        value={form.email}
-        onChangeText={(text) => setForm((prev) => ({ ...prev, email: text }))}
-        keyboardType="email-address"
-        autoCapitalize="none"
+        placeholder="From"
+        value={form.from}
+        onChangeText={(value) => setForm({ ...form, from: value })}
       />
 
       <TextInput
         style={styles.input}
-        placeholder="Password"
-        value={form.password}
-        onChangeText={(text) => setForm((prev) => ({ ...prev, password: text }))}
-        secureTextEntry
-      />
-
-      {loading ? (
-        <ActivityIndicator size="large" color="#0000ff" />
-      ) : (
-        <CustomButton
-          title="Sign In"
-          bgVariant="primary"
-          textVariant="default"
-          onPress={onSignInPress}
-        />
-      )}
-
-      <CustomButton
-        title="Back"
-        bgVariant="secondary"
-        textVariant="secondary"
-        onPress={() => router.back()}
+        placeholder="To"
+        value={form.to}
+        onChangeText={(value) => setForm({ ...form, to: value })}
       />
 
       <CustomButton
-        title="Go to Home"
-        bgVariant="success"
-        textVariant="default"
-        onPress={() => router.replace('/(root)/(tabs)/home')}
+        title={loading ? 'Calculating...' : 'Find Now'}
+        onPress={calculateDistance}
+        disabled={loading}
       />
 
-      <CustomButton
-        title="Sign Out"
-        bgVariant="danger"
-        textVariant="default"
-        onPress={onSignOutPress}
-      />
+      {distance && <Text style={styles.result}>Distance: {distance || 'N/A'}</Text>}
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 20,
-  },
-  heading: {
-    marginBottom: 20,
-    fontSize: 24,
-    fontFamily: typography.JakartaExtraBold,
-  },
+  container: { padding: 20, flex: 1, justifyContent: 'center' },
   input: {
-    width: '100%',
     height: 50,
     borderWidth: 1,
     borderColor: '#ccc',
     borderRadius: 8,
     paddingHorizontal: 10,
-    marginBottom: 15,
+    marginBottom: 16,
+  },
+  result: {
+    marginTop: 20,
     fontSize: 16,
+    color: 'green',
   },
 });
+
+export default FindRide;
