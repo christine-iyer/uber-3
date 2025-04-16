@@ -51,9 +51,11 @@ const FindRide = () => {
         data.rows[0].elements[0] &&
         data.rows[0].elements[0].distance
       ) {
-        const distanceText = data.rows[0].elements[0].distance.text;
-        setDistance(distanceText);
-        Alert.alert('Distance', `The distance is ${distanceText || 'N/A'}.`);
+        const distanceInMeters = data.rows[0].elements[0].distance.value; // Distance in meters
+        const distanceInMiles = (distanceInMeters * 0.000621371).toFixed(2); // Convert to miles and round to 2 decimal places
+
+        setDistance(`${distanceInMiles} miles`); // Update state with the converted distance
+        Alert.alert('Distance', `The distance is ${distanceInMiles} miles.`);
       } else {
         Alert.alert('Error', 'Unable to calculate distance. Please try again.');
       }
