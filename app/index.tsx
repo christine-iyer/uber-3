@@ -1,4 +1,3 @@
-import { useUser, useAuth } from '@clerk/clerk-expo';
 import { useRouter } from 'expo-router';
 import { SafeAreaView, Text, ActivityIndicator, Button, StyleSheet } from 'react-native';
 
@@ -7,7 +6,6 @@ import { typography } from '../styles/typography.js';
 export default function Home() {
   const router = useRouter();
   const { isSignedIn, isLoaded, user } = useUser();
-  const { signOut } = useAuth();
 
   if (!isLoaded) {
     return (
@@ -24,14 +22,6 @@ export default function Home() {
         <>
           <Text>Welcome, {user?.fullName || 'No Name Found'}!</Text>
           <Text>Email: {user?.primaryEmailAddress?.emailAddress || 'No Email'}</Text>
-
-          <Button
-            title="Logout"
-            onPress={() => {
-              signOut();
-              router.replace('/login'); // Redirect to login screen
-            }}
-          />
         </>
       ) : (
         <>

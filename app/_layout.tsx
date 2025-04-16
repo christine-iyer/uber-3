@@ -1,38 +1,17 @@
-import { ClerkProvider, ClerkLoaded } from '@clerk/clerk-expo';
 import { useFonts } from 'expo-font';
 import { Slot } from 'expo-router';
-import * as SecureStore from 'expo-secure-store';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect, useState } from 'react';
 import { View, ActivityIndicator, SafeAreaView } from 'react-native';
 
-import { tokenCache } from '@/cache';
 import 'react-native-reanimated';
 
 // Prevent splash screen from hiding too early
 SplashScreen.preventAutoHideAsync();
 
 // Retrieve Clerk Publishable Key
-const publishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY;
-
-if (!publishableKey) {
-  throw new Error(
-    'Missing Publishable Key. Please set EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY in your .env'
-  );
-}
 
 // SecureStore token caching for Clerk authentication
-const tokenCacheConfig = {
-  async getToken(key) {
-    return SecureStore.getItemAsync(key);
-  },
-  async saveToken(key, value) {
-    return SecureStore.setItemAsync(key, value);
-  },
-  async removeToken(key) {
-    return SecureStore.deleteItemAsync(key);
-  },
-};
 
 export default function RootLayout() {
   const [isReady, setIsReady] = useState(false);
@@ -69,12 +48,8 @@ export default function RootLayout() {
   }
 
   return (
-    <ClerkProvider tokenCache={tokenCacheConfig} publishableKey={publishableKey}>
-      <ClerkLoaded>
-        <SafeAreaView style={{ flex: 1 }}>
-          <Slot />
-        </SafeAreaView>
-      </ClerkLoaded>
-    </ClerkProvider>
+    <SafeAreaView style={{ flex: 1 }}>
+      <Slot />
+    </SafeAreaView>
   );
 }
