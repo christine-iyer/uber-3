@@ -14,7 +14,12 @@ const FindRide = () => {
   const [loading, setLoading] = useState(false);
 
   const calculateDistance = async () => {
-    if (!form.from || !form.to) {
+    // Trim input values to remove leading/trailing whitespace
+    const from = form.from.trim();
+    const to = form.to.trim();
+
+    // Validate input fields
+    if (!from || !to) {
       Alert.alert('Error', 'Please fill in both locations.');
       return;
     }
@@ -24,17 +29,20 @@ const FindRide = () => {
     setLoading(true);
 
     try {
+      // Construct the API URL
       const apiUrl = `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${encodeURIComponent(
-        form.from
-      )}&destinations=${encodeURIComponent(form.to)}&key=${GOOGLE_MAPS_API_KEY}`;
+        from
+      )}&destinations=${encodeURIComponent(to)}&key=${GOOGLE_MAPS_API_KEY}`;
 
       console.log('API URL:', apiUrl); // Log the full API URL
 
+      // Make the API request using axios
       const response = await axios.get(apiUrl);
 
       const data = response.data;
       console.log('API Response:', data); // Debug API response
 
+      // Check if the response contains valid distance data
       if (
         data.status === 'OK' &&
         data.rows &&
@@ -50,6 +58,7 @@ const FindRide = () => {
         Alert.alert('Error', 'Unable to calculate distance. Please try again.');
       }
     } catch (error) {
+      // Handle errors
       if (error.response) {
         console.error('API Error Response:', error.response.data);
       } else if (error.request) {

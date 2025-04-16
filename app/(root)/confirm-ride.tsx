@@ -1,10 +1,9 @@
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
-import { Text, View, StyleSheet } from 'react-native';
+import { Text, View, StyleSheet, TextInput } from 'react-native';
 import { typography } from 'styles/typography';
 
 import CustomButton from '../../components/CustomButton';
-import InputField from '../../components/InputField';
 import { icons } from './../../constants';
 
 const ConfirmRide = () => {
@@ -19,10 +18,9 @@ const ConfirmRide = () => {
     <View style={styles.container}>
       <View style={styles.viewone}>
         <Text style={styles.label}>From</Text>
-        <InputField
-          label="From"
+        <TextInput
+          style={styles.input}
           placeholder="Enter your location"
-          icon={icons.pin}
           value={form.from}
           onChangeText={(value) => setForm({ ...form, from: value })}
         />
@@ -30,9 +28,9 @@ const ConfirmRide = () => {
 
       <View style={styles.viewtwo}>
         <Text style={styles.label}>To</Text>
-        <InputField
-          label="To"
-          placeholder="Where are you going?"
+        <TextInput
+          style={styles.input}
+          placeholder="To?"
           icon={icons.marker}
           value={form.to}
           onChangeText={(value) => setForm({ ...form, to: value })}
@@ -51,7 +49,7 @@ const ConfirmRide = () => {
 
 const styles = StyleSheet.create({
   container: { padding: 20, flex: 1, justifyContent: 'center' },
-  viewone: { marginBottom: 16 },
+  input: { marginBottom: 16 },
   viewtwo: { marginBottom: 16 },
   label: {
     fontFamily: typography.JakartaSemiBold,

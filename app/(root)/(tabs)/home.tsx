@@ -60,7 +60,7 @@ export default function HomeScreen() {
         title="➡ to Schedule Ride"
         bgVariant="outline"
         textVariant="secondary"
-        onPress={() => router.push('/(root)/book-ride')}
+        onPress={() => router.push('/(root)/find-ride')}
       />
 
       <FlatList
