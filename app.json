@@ -7,8 +7,8 @@
     "version": "1.0.0",
 
     "web": {
-      "favicon": "./assets/images/splash.png",
-       "bundler": "metro"
+      "favicon": "./assets/images/towT.png",
+      "bundler": "metro"
     },
 
     "experiments": {
@@ -18,12 +18,12 @@
     "plugins": [],
 
     "orientation": "portrait",
-    "icon": "./assets/images/splash.png",
+    "icon": "./assets/images/towT.png",
 
     "userInterfaceStyle": "light",
 
     "splash": {
-      "image": "./assets/images/splash.png",
+      "image": "./assets/images/towT.png",
       "resizeMode": "cover",
       "backgroundColor": "#ffffff"
     },

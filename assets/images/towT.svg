@@ -1,0 +1,23 @@
+<svg width="200" height="120" viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">
+  <!-- Truck body -->
+  <rect x="30" y="50" width="100" height="40" fill="#84a59d" rx="4" />
+  
+  <!-- Truck cabin -->
+  <rect x="110" y="40" width="30" height="50" fill="#f28482" rx="3" />
+
+  <!-- Wheels -->
+  <circle cx="50" cy="95" r="10" fill="#4d3347" />
+  <circle cx="120" cy="95" r="10" fill="#2e2e41" />
+
+  <!-- Tow arm -->
+  <line x1="40" y1="50" x2="10" y2="10" stroke="#7f8c8d" stroke-width="4" />
+  <line x1="10" y1="10" x2="10" y2="50" stroke="#159947" stroke-width="4" />
+  <circle cx="10" cy="50" r="4" fill="#159947" />
+
+  <!-- Hook -->
+  <line x1="10" y1="50" x2="10" y2="60" stroke="#159947" stroke-width="2" />
+  <path d="M10 60 q5 5 0 10" stroke="#159947" stroke-width="2" fill="none" />
+
+  <!-- Window -->
+  <rect x="115" y="45" width="20" height="15" fill="#beceda" rx="2" />
+</svg>
