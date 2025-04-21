@@ -18,12 +18,12 @@
     "plugins": [],
 
     "orientation": "portrait",
-    "icon": "./assets/images/splashT.png",
+    "icon": "./assets/images/jumper.png",
 
     "userInterfaceStyle": "light",
 
     "splash": {
-      "image": "./assets/images/splashT.png",
+      "image": "./assets/images/jumper.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
