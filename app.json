@@ -7,8 +7,8 @@
     "version": "1.0.0",
 
     "web": {
-      "favicon": "./assets/images/towT.png",
-      "bundler": "metro"
+      "favicon": "./assets/images/splash.png",
+       "bundler": "metro"
     },
 
     "experiments": {
@@ -17,14 +17,14 @@
 
     "plugins": [],
 
-    "orientation": "portrait",
-    "icon": "./assets/images/towT.png",
+    "orientation": "r",
+    "icon": "./assets/images/splashT.png",
 
     "userInterfaceStyle": "light",
 
     "splash": {
-      "image": "./assets/images/towT.png",
-      "resizeMode": "cover",
+      "image": "./assets/images/splashT.png",
+      "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
     "assetBundlePatterns": ["**/*"],
