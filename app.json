@@ -17,7 +17,7 @@
 
     "plugins": [],
 
-    "orientation": "r",
+    "orientation": "portrait",
     "icon": "./assets/images/splashT.png",
 
     "userInterfaceStyle": "light",
